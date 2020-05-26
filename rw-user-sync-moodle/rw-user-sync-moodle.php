@@ -3,8 +3,8 @@
 PLugin Name: Edwiser Bridge Trigger - User Registered Auto-linker
 Plugin URI: https://www.rewrite.com.ar
 Description: Triggers Edwiser Bridge "link" action for every new user registered. It triggers with Wordpress core action 'user_register', so whatever it is used to create a new user, Edwiser Bridge "link" function is automatically called and user gets linked with the moodle site already setup in Edwiser Bridge plugin.  
-A log file is written every time the plugin is triggered. You can check the file under the plugin folder /plugins/syncs-log.txt . (click edit in admin view and select file)
-Version: 0.1
+A log file is written every time the plugin is triggered. You can check the file under the plugin folder /plugins/syncs-log.txt . (click edit and select file)
+Version: 0.2
 Author:  Rewrite
 Author URI: https://www.rewrite.com.ar
 License: Creative Commons Attribution 4.0 International
@@ -28,7 +28,7 @@ function rwms_trigger_edwiser_sync($user_id) {
 	// trigger Edwiser link function
 	$plugin_is_active = is_plugin_active('edwiser-bridge/edwiser-bridge.php');
 	
-	$self = new edwiserBridge\EBUserManager();
+	$self = new edwiserBridge\EBUserManager('user-sync','1');
 	$linked = $self->linkMoodleUser($user);
 	
 	// log action
@@ -36,3 +36,17 @@ function rwms_trigger_edwiser_sync($user_id) {
 	error_log(' | edwiser_plugin_active: '.$active .', linked: '.$linked .' '. PHP_EOL, 3, $logFile);
 	
 }
+
+
+/*
+    CHANGELOG
+*/
+
+/*
+    version         0.2
+    date            26-05-2020
+    change
+        fixed call to edwiserBridge\EBUserManager
+        added ($plugin_name, $version) 
+        
+*/
